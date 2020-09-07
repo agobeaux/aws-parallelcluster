@@ -3921,6 +3921,12 @@
               "Outputs.MasterInstanceID"
             ]
           },
+          "MasterPrivateIP": {
+            "Fn::GetAtt": [
+              "MasterServerSubstack",
+              "Outputs.MasterPrivateIP"
+            ]
+          },
           "EBSVolumesIds": {
             "Fn::GetAtt": [
               "EBSCfnStack",
