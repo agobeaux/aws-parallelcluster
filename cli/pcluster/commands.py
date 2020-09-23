@@ -102,6 +102,8 @@ def _upload_hit_resources(bucket_name, pcluster_config, json_params):
 
 def _upload_dashboard_resource(bucket_name, pcluster_config, json_params, cfn_params):
     params = {"json_params": json_params, "cfn_params": cfn_params}
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
     cw_dashboard_template_url = pcluster_config.get_section("cluster").get_param_value(
         "cw_dashboard_template_url"
     ) or "{bucket_url}/templates/cw-dashboard-substack-{version}.cfn.yaml".format(
@@ -110,8 +112,9 @@ def _upload_dashboard_resource(bucket_name, pcluster_config, json_params, cfn_pa
     )
 
     try:
-        file_contents = utils.read_remote_file(cw_dashboard_template_url)
-        rendered_template = utils.render_template(file_contents, params)
+        with open(dir_path+'/../../cloudformation/cw-dashboard-substack.cfn.yaml') as f:
+            file_contents = f.read()
+            rendered_template = utils.render_template(file_contents, params)
     except Exception as e:
         LOGGER.error(
             "Error when generating CloudWatch Dashboard template from path %s: %s", cw_dashboard_template_url, e
