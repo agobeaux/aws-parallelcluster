@@ -112,7 +112,7 @@ def _upload_dashboard_resource(bucket_name, pcluster_config, json_params, cfn_pa
     )
 
     try:
-        with open(dir_path + "/../../cloudformation/cw-dashboard-substack.cfn.yaml") as f:
+        with open(dir_path + "/resources/cw-dashboard-substack.cfn.yaml") as f:
             file_contents = f.read()
             rendered_template = utils.render_template(file_contents, params)
     except Exception as e:
